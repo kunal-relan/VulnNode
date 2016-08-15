@@ -1,0 +1,52 @@
+{
+	"development": {
+
+		"host": "localhost",
+
+		"port": 8080,
+
+		"cookieSecret": "cookieSecret",
+
+		"sessionSecret": "sessionSecret",
+
+		"database": {
+
+			"name": "test",
+
+			"host": "localhost",
+
+			"port": 27017,
+
+			"user": "",
+
+			"password": ""
+		}
+	},
+
+
+	"production": {
+
+		"host": "localhost",
+
+		"port": 8080,
+
+		"cookieSecret": "cookieSecret",
+
+		"sessionSecret": "sessionSecret",
+
+		"database": {
+
+			"name": "test",
+
+			"host": "localhost",
+
+			"port": 27017,
+
+			"user": "",
+
+			"password": ""
+		}
+	}
+
+
+}

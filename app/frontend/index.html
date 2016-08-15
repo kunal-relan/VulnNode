@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="vulnNode">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VulnNode</title>
+    <base href="/">
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="css/form-elements.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="bower_components/ng-notifications-bar/dist/ngNotificationsBar.min.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css" />
+<!--     <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" /> -->
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body ng-controller="MainController">
+    <!-- Top content -->
+    <div class="top-content">
+        <div notifications-bar class="notifications"></div notifications-bar>
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1>VulnNode</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Login</h3>
+                                    <p>Enter email and password to log on:</p>
+                                    <div ng-if="warning">
+                                        <div class="alert alert-danger">
+                                            {{warning}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="success">
+                                        <div class="alert alert-success">
+                                            {{success}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="warning_message">
+                                        <div class="alert alert-success">
+                                            {{warning_message}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-key"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form role="form" method="post" action="/signin" enctype='application/json'>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-username"><span class="glyphicon glyphicon-user"></span>Email</label>
+                                        <input type="text" name="email"  placeholder="Email..." class="form-username form-control" id="form-username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-password"><span class="glyphicon glyphicon-key"></span>Password</label>
+                                        <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
+                                    </div>
+                                    <button type="submit" class="btn">Sign in!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 middle-border"></div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5">
+                        <div class="form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Sign up now</h3>
+                                    <p>Fill in the form below to get instant access:</p>
+                                    <div ng-if="warning1">
+                                        <div class="alert alert-danger">
+                                            {{warning1}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="success1">
+                                        <div class="alert alert-success">
+                                            {{success1}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="warning_message1">
+                                        <div class="alert alert-success">
+                                            {{warning_message1}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-pencil"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form role="form" ng-submit="create()">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-first-name"> <span class="glyphicon glyphicon-user"></span>name</label>
+                                        <input type="text" name="form-first-name" ng-model="user.fullname" placeholder="Name..." class="form-first-name form-control" id="form-first-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-email">Email</label>
+                                        <input type="text" name="form-email" placeholder="Email..." ng-model="user.email" class="form-email form-control" id="form-email">
+                                    </div>
+                                    <div class="form-group">
+                                        <!--  <label for="psw">Password</label> -->
+                                        <label class="sr-only" for="form-email">Password</label>
+                                        <input type="password" class="form-control" id="psw" placeholder="Password" ng-model="user.password" required minlength=8>
+                                    </div>
+                                
+                                    <!--   <div class="form-group">
+				                        	<label class="sr-only" for="form-about-yourself">About yourself</label>
+				                        	<textarea name="form-about-yourself" placeholder="About yourself..." 
+				                        				class="form-about-yourself form-control" id="form-about-yourself"></textarea>
+				                        </div> -->
+                                    <button type="submit" class="btn">Sign me up!</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </footer>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+    </script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/ng-notifications-bar/dist/ngNotificationsBar.min.js"></script>
+    <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app/frontend}) js/scripts.js -->
+    <script src="js/app.js"></script>
+    <script src="js/services/InterceptorService.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/admin.js"></script>
+    <script src="js/controllers/auth.js"></script>
+    <script src="js/controllers/404.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>
